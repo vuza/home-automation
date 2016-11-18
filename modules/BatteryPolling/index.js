@@ -1,9 +1,10 @@
 /*** BatteryPolling Z-Way HA module *******************************************
 
- Version: 2.0.1
+ Version: 3.0.0
  (c) Z-Wave.Me, 2014
  -----------------------------------------------------------------------------
- Author: Gregory Sitnin <sitnin@z-wave.me> nad Serguei Poltorak <ps@z-wave.me>
+ Author: Gregory Sitnin <sitnin@z-wave.me> nad Serguei Poltorak <ps@z-wave.me>,
+ Martin Petzold <mp@zwave.eu>
  Description:
  This module periodically requests all battery devices for battery level report
 
