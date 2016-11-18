@@ -1,50 +1,132 @@
 {
-    "singleton": true,
-    "dependencies": ["Cron"],
-    "category": "basic_gateway_modules",
-    "author": "Z-Wave.Me",
-    "homepage": "http://razberry.z-wave.me",
-    "icon": "icon.png",
-    "moduleName": "BatteryPolling",
-    "version": "2.0.1",
-    "maturity": "stable",
-    "repository": {
-            "type": "git",
-            "source": "https://github.com/Z-Wave-Me/home-automation"
-    },
-    "defaults": {
-        "title": "__m_title__",
-        "description": "__m_descr__",
-        "launchWeekDay": 0,
-        "warningLevel": 20
-    },
-    "schema": {
+  "singleton": true,
+  "dependencies": [
+    "Cron"
+  ],
+  "category": "basic_gateway_modules",
+  "author": "Z-Wave.Me",
+  "homepage": "http://razberry.z-wave.me",
+  "icon": "icon.png",
+  "moduleName": "BatteryPolling",
+  "version": "2.0.1",
+  "maturity": "stable",
+  "repository": {
+    "type": "git",
+    "source": "https://github.com/Z-Wave-Me/home-automation"
+  },
+  "defaults": {
+    "title": "__m_title__",
+    "description": "__m_descr__",
+    "launchWeekDay": 0,
+    "warningLevel": 20
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "launchWeekDay": {
+        "type": "number",
+        "required": true,
+        "enum": [
+          -1,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          0
+        ]
+      },
+      "warningLevel": {
+        "type": "select",
+        "required": true,
+        "enum": [
+          5,
+          10,
+          15,
+          20,
+          60
+        ]
+      },
+      "lowScene": {
         "type": "object",
-        "properties": {
-            "launchWeekDay": {
-                "type": "number",
-                "required": true,
-	        "enum": [-1, 1, 2, 3, 4, 5, 6, 0]
-            },
-            "warningLevel": {
-                "type": "select",
-                "required": true,
-                "enum": [5, 10, 15, 20, 60]
-            }
-        },
-        "required": false
+        "$ref": "#/definitions/toggleButton"
+      }
     },
-    "options": {
-        "fields": {
-            "launchWeekDay": {
-                "label": "__l_launch_wd__",
-	            "optionLabels": ["__every_d__", "__mon__", "__tue__", "__wed__", "__thu__", "__fri__", "__sat__", "__sun__"]
-            },
-            "warningLevel": {
-                "label": "__l_warning_lvl__",
-                "helper": "__h_warning_lvl__",
-                "optionLabels": ["5%", "10%", "15%", "20%","60%"]
+    "required": false,
+    "definitions": {
+      "toggleButton": {
+        "properties": {
+          "table": {
+            "type": "array",
+            "default": "devices",
+            "items": {
+              "type": "object",
+              "properties": {
+                "devices": {
+                  "title": "__l_device__",
+                  "type": "string",
+                  "field": "enum",
+                  "datasource": "namespaces",
+                  "enum": "namespaces:devices_toggleButton:deviceId"
+                }
+              }
             }
+          }
         }
+      }
     }
+  },
+  "options": {
+    "fields": {
+      "launchWeekDay": {
+        "label": "__l_launch_wd__",
+        "optionLabels": [
+          "__every_d__",
+          "__mon__",
+          "__tue__",
+          "__wed__",
+          "__thu__",
+          "__fri__",
+          "__sat__",
+          "__sun__"
+        ]
+      },
+      "warningLevel": {
+        "label": "__l_warning_lvl__",
+        "helper": "__h_warning_lvl__",
+        "optionLabels": [
+          "5%",
+          "10%",
+          "15%",
+          "20%",
+          "60%"
+        ]
+      },
+      "lowScene": {
+        "label": "__l_lowScene_id__",
+        "type": "object",
+        "$ref": "#/definitions/toggleButton"
+      }
+    },
+    "definitions": {
+      "toggleButton": {
+        "fields": {
+          "table": {
+            "type": "table",
+            "items": {
+              "fields": {
+                "devices": {
+                  "type": "select",
+                  "datasource": "namespaces",
+                  "field": "optionLabels",
+                  "optionLabels": "namespaces:devices_toggleButton:deviceName"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -84,11 +84,9 @@ function State(stateEnum, entry, make, exit) {
             stateEnum.StateStatus = StateStatus.RUNNING;
             make(args);
         }
-
     };
     this.doExit = function () {
         if (stateEnum.StateStatus === StateStatus.RUNNING) {
-
             exit();
             stateEnum.StateStatus = StateStatus.STOPPED;
         }
@@ -147,8 +145,17 @@ BatteryPolling.prototype.initStates = function () {
             //self.log("error", "empty", true);
 
         }, function (args) {
+            langFile=self.controller.loadModuleLang("BatteryPolling");
             self.controller.addNotification("warning", langFile.warning + args, "battery", self.vDev.get("id"));
             self.log("warning", langFile.warning + args, true);
+            self.lowScene.forEach(
+                function (args) {
+                    if (self.controller.devices.get(args.devices)) {
+                        var vDev = self.controller.devices.get(args.devices);
+                        vDev.performCommand("on");
+                    }
+                }
+            )
         },
         function () {
         });
@@ -286,8 +293,10 @@ BatteryPolling.prototype.makeDeviceMethods = function () {
     };
 }
 BatteryPolling.prototype.init = function (config) {
-    BatteryPolling.super_.prototype.init.call(this, config);
-    this.initStates();
+    var self=this;
+    BatteryPolling.super_.prototype.init.call(self, config);
+    self.lowScene=config.lowScene.table;
+    self.initStates();
 };
 
 BatteryPolling.prototype.stop = function () {
