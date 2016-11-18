@@ -12,5 +12,7 @@
 	"sun":"Sonntag",
 	"l_warning_lvl":"Benachrichtigungslevel",
 	"h_warning_lvl":"Das Modul sendet eine Benachrichtigung, wenn der Batteriestatus eines Gerätes unterhalb dieses Levels fällt.",
-	"warning":"Achtung! Das Batterielevel des Gerätes beträgt nur noch >:> "
+	"warning":"Achtung! Das Batterielevel des Gerätes beträgt nur noch >:> ",
+	"l_device":"ausgewählte Geräte",
+	"l_lowScene_id":"Bestätigung dafür das der Batteriestand niedrig ist"
 }

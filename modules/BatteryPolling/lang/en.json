@@ -12,5 +12,7 @@
 	"sun":"Sunday",
 	"l_warning_lvl":"Warning Level",
 	"h_warning_lvl":"Warn if device's battery is below this level",
-	"warning":"Attention! Device is low battery >:> "
+	"warning":"Attention! Device is low battery >:> ",
+	"l_device": "chosen devices",
+	"l_lowScene_id":"battery low confirmation action"
 }
