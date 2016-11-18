@@ -12,3 +12,5 @@ blub
 userModules/
 .idea
 *.iml
+*.tar
+*.gz
