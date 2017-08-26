@@ -5,8 +5,8 @@
   tasks:
     - name: Copy module
       copy:
-        src: "../{{ module }}"
-        dest: "{{ dest }}"
+        src: "../modules/{{ module }}/"
+        dest: "{{ dest }}{{ module }}/"
 
     - name: Restart z-way-server
       service:

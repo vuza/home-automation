@@ -50,7 +50,7 @@ You can also find a list of all [currently published apps](https://developer.z-w
 
 ## Deployment
 You can deploy single modules you are working with via ansible from your local machine.
-Simply copy the `deployment/hosts.template` to `deployment/hosts`, fill your server's IP and type `ansible-playbook deployment/main.yml -i deployment/hosts --extra-vars "module=modules/Ftb"`, and replace the module path with the module you wish to deploy.
+Simply copy the `deployment/hosts.template` to `deployment/hosts`, fill your server's IP and type `ansible-playbook deployment/main.yml -i deployment/hosts --extra-vars "module=Ftb"`, and replace the module path with the module you wish to deploy.
 
 ## Disscussion platforms:
 * https://forum.z-wave.me/ (discussions available in en/de/ru/fr/it/cn, posts about: RaZberry, Z-Uno ...)
