@@ -1,0 +1,76 @@
+{
+  "singleton": false,
+  "dependencies": [],
+  "category": "automation_basic",
+  "author": "Marlon Alagoda",
+  "moduleName": "Ftb",
+  "version": "1.0.0",
+  "maturity": "stable",
+  "defaults": {
+    "title": "Fibaro The Button",
+    "description": "Fire usefull events on interactions with Fibaro's 'The Button'",
+    "sourceDevice": {},
+    "targets": []
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "sourceDevice": {
+        "type": "object",
+        "properties": {
+          "button": {
+            "type": "object",
+            "properties": {
+              "device": {
+                "field": "enum",
+                "datasource": "namespaces",
+                "enum": "namespaces:devices_sensorDiscrete:deviceId",
+                "required": true
+              }
+            }
+          }
+        }
+      },
+      "targets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "button": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "datasource": "namespaces",
+                  "enum": "namespaces:devices_sensorDiscrete:deviceId",
+                  "required": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "options": {
+    "fields": {
+      "sourceDevice": {
+        "label": "Choose you Fibaro The Button",
+        "fields": {
+          "button": {
+            "fields": {
+              "device": {
+                "type": "select",
+                "removeDefaultNone": false,
+                "noneLabel": "Choose your Fibaro The Button",
+                "datasource": "namespaces",
+                "field": "optionLabels",
+                "optionLabels": "namespaces:devices_sensorDiscrete:deviceName"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -47,6 +47,11 @@ There are also some How To's about creating own apps for home automation and wha
 * also checkout the tab Upload-Process to see how it works
 
 You can also find a list of all [currently published apps](https://developer.z-wave.me/?uri=public#/web/apps) 
+
+## Deployment
+You can deploy single modules you are working with via ansible from your local machine.
+Simply copy the `deployment/hosts.template` to `deployment/hosts`, fill your server's IP and type `ansible-playbook deployment/main.yml -i deployment/hosts --extra-vars "module=modules/Ftb"`, and replace the module path with the module you wish to deploy.
+
 ## Disscussion platforms:
 * https://forum.z-wave.me/ (discussions available in en/de/ru/fr/it/cn, posts about: RaZberry, Z-Uno ...)
 * http://www.zwave.de/forum (de)
