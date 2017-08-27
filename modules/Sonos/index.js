@@ -217,6 +217,23 @@ Sonos.prototype.renderPlayer = function (household, host) {
     moduleId: this.id
   })
 
+  var vDevP = self.controller.devices.create({
+    deviceId: 'Sonos_Device_Previous_' + host + '_' + this.id,
+    defaults: {
+      deviceType: 'toggleButton',
+      metrics: {
+        title: 'Sonos Previous ' + host + ' ' + this.id,
+        icon: '',
+        level: 'on'
+      }
+    },
+    overlay: {},
+    handler: function (command, args) {
+      self.action(host, 'Previous')
+    },
+    moduleId: this.id
+  })
+
   var vDevV = self.controller.devices.create({
     deviceId: 'Sonos_Device_Volume_' + host + '_' + this.id,
     defaults: {
