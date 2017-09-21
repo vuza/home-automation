@@ -1,0 +1,32 @@
+{
+  "singleton": false,
+  "dependencies": [],
+  "category": "automation_basic",
+  "author": "Marlon Alagoda",
+  "moduleName": "HttpInbound",
+  "version": "1.0.0",
+  "maturity": "stable",
+  "defaults": {
+    "title": "HTTP Inbound Module",
+    "description": "Listen to HTTP events",
+    "sourceDevice": {},
+    "targets": []
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "required": true
+      }
+    }
+  },
+  "options": {
+    "fields": {
+      "path": {
+        "label": "Path",
+        "helper": "Type http path"
+      }
+    }
+  }
+}
