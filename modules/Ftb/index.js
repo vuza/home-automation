@@ -69,35 +69,29 @@ Ftb.prototype.init = function (config) {
   self.controller.devices.on(button.device, 'change:metrics:level', function (event) {
     const updateTime = event.get('updateTime')
 
-    debugPrint(JSON.stringify(self.controller.devices))
-
-    // Make sure it does get fired only once
-    if (!lastEvent.updateTime || lastEvent.updateTime < updateTime) {
-      lastEvent = {level: event.get('metrics').level, updateTime: updateTime}
-
-      // Handle event
-      switch (parseInt(String(event.get('metrics').level).split('')[1])) {
-        case 0:
-          self.vDevs['1'].performCommand('on')
-          break
-        case 2:
-          self.vDevs['long'].performCommand('on')
-          break
-        case 3:
-          self.vDevs['2'].performCommand('on')
-          break
-        case 4:
-          self.vDevs['3'].performCommand('on')
-          break
-        case 5:
-          self.vDevs['4'].performCommand('on')
-          break
-        case 6:
-          self.vDevs['5'].performCommand('no')
-          break
-        default:
-          debugPrint('Unknown event in Ftb app')
-      }
+    // Handle event
+    switch (parseInt(String(event.get('metrics').level).split('')[1])) {
+      case 0:
+        self.vDevs['1'].performCommand('on')
+        console.log('PERFORMED CMD!')
+        break
+      case 2:
+        self.vDevs['long'].performCommand('on')
+        break
+      case 3:
+        self.vDevs['2'].performCommand('on')
+        break
+      case 4:
+        self.vDevs['3'].performCommand('on')
+        break
+      case 5:
+        self.vDevs['4'].performCommand('on')
+        break
+      case 6:
+        self.vDevs['5'].performCommand('no')
+        break
+      default:
+        debugPrint('Unknown event in Ftb app')
     }
   })
 }

@@ -24,7 +24,7 @@
               "device": {
                 "field": "enum",
                 "datasource": "namespaces",
-                "enum": "namespaces:devices_sensorDiscrete:deviceId",
+                "enum": "namespaces:devices_all:deviceId",
                 "required": true
               }
             }
@@ -42,7 +42,7 @@
                 "target": {
                   "type": "string",
                   "datasource": "namespaces",
-                  "enum": "namespaces:devices_sensorDiscrete:deviceId",
+                  "enum": "namespaces:devices_all:deviceId",
                   "required": true
                 }
               }
@@ -65,7 +65,7 @@
                 "noneLabel": "Choose your Fibaro The Button",
                 "datasource": "namespaces",
                 "field": "optionLabels",
-                "optionLabels": "namespaces:devices_sensorDiscrete:deviceName"
+                "optionLabels": "namespaces:devices_all:deviceName"
               }
             }
           }
