@@ -43,7 +43,7 @@ Sonos.prototype.init = function (config) {
 
   this.householdFinder()
   this.playersFinder()
-  this.notifier()
+  // this.notifier()
 
   this.config.households.forEach(function (household) {
     self.playersFinderLookup(household)
@@ -295,59 +295,61 @@ Sonos.prototype.subscribe = function (household, host) {
   })
 }
 
-Sonos.prototype.notifier = function () {
-  var self = this
-
-  var sockNotifier = new sockets.tcp()
-  sockNotifier.reusable()
-  sockNotifier.bind(3400)
-  sockNotifier.onconnect = function (host, port) {
-    this.msg = ''
-  }
-  sockNotifier.onrecv = function (data, host, port) {
-    this.msg += String.fromCharCode.apply(null, new Uint8Array(data))
-    var indx = this.msg.indexOf('\r\n\r\n')
-    if (indx != -1) {
-      var header_len_str = 'CONTENT-LENGTH'
-      var header = this.msg.slice(0, indx).split('\r\n')
-      var header_len = header.filter(function (str) { return str.slice(0, header_len_str.length) === header_len_str })
-      if (header_len.length) {
-        data_len = parseInt(header_len[0].split(':')[1], 10)
-        data = this.msg.slice(indx + 4)
-        if (data.length >= data_len) {
-          // full message received
-          this.send('HTTP/1.1 200 OK\r\nServer: Linux UPnP/1.0 Sonos/28.1-83040 (MDCR_MacBookPro11,1)\r\nConnection: close\r\n\r\n')
-          this.close()
-
-          var x = new ZXmlDocument(data)
-          var lastChange = x.findOne('//LastChange/text()')
-          if (lastChange) {
-            lastChange = lastChange.replace(' xmlns="urn:schemas-upnp-org:metadata-1-0/RCS/"', '') // TODO: temp hack until we fix xmlns problem // fixed, but need time to redo this part
-            lastChange = lastChange.replace(' xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"', '') // TODO: temp hack until we fix xmlns problem
-            var vol = (new ZXmlDocument(lastChange)).findOne('/Event/InstanceID/Volume[@channel="Master"]/@val')
-            if (vol) {
-              var vDevV = self.controller.devices.get('Sonos_Device_Volume_' + host + '_' + self.id)
-              if (vDevV) {
-                vDevV.set('metrics:level', parseInt(vol, 10))
-              }
-            }
-            var play = (new ZXmlDocument(lastChange)).findOne('/Event/InstanceID/TransportState/@val')
-            if (play) {
-              var vDevP = self.controller.devices.get('Sonos_Device_Play_' + host + '_' + self.id)
-              if (vDevP) {
-                vDevP.set('metrics:level', play === 'PLAYING' ? 'on' : 'off')
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  sockNotifier.listen()
-  console.log('Binding Sonos notifier')
-
-  this.sockNotifier = sockNotifier
-}
+// Sonos.prototype.notifier = function () {
+//   var self = this
+//
+//   var sockNotifier = new sockets.tcp()
+//   sockNotifier.reusable()
+//   sockNotifier.bind(3400)
+//   sockNotifier.onconnect = function (host, port) {
+//     console.log('CONNECT')
+//     this.msg = ''
+//   }
+//   sockNotifier.onrecv = function (data, host, port) {
+//     console.log('RECEIVE')
+//     this.msg += String.fromCharCode.apply(null, new Uint8Array(data))
+//     var indx = this.msg.indexOf('\r\n\r\n')
+//     if (indx != -1) {
+//       var header_len_str = 'CONTENT-LENGTH'
+//       var header = this.msg.slice(0, indx).split('\r\n')
+//       var header_len = header.filter(function (str) { return str.slice(0, header_len_str.length) === header_len_str })
+//       if (header_len.length) {
+//         data_len = parseInt(header_len[0].split(':')[1], 10)
+//         data = this.msg.slice(indx + 4)
+//         if (data.length >= data_len) {
+//           // full message received
+//           this.send('HTTP/1.1 200 OK\r\nServer: Linux UPnP/1.0 Sonos/28.1-83040 (MDCR_MacBookPro11,1)\r\nConnection: close\r\n\r\n')
+//           this.close()
+//
+//           var x = new ZXmlDocument(data)
+//           var lastChange = x.findOne('//LastChange/text()')
+//           if (lastChange) {
+//             lastChange = lastChange.replace(' xmlns="urn:schemas-upnp-org:metadata-1-0/RCS/"', '') // TODO: temp hack until we fix xmlns problem // fixed, but need time to redo this part
+//             lastChange = lastChange.replace(' xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/"', '') // TODO: temp hack until we fix xmlns problem
+//             var vol = (new ZXmlDocument(lastChange)).findOne('/Event/InstanceID/Volume[@channel="Master"]/@val')
+//             if (vol) {
+//               var vDevV = self.controller.devices.get('Sonos_Device_Volume_' + host + '_' + self.id)
+//               if (vDevV) {
+//                 vDevV.set('metrics:level', parseInt(vol, 10))
+//               }
+//             }
+//             var play = (new ZXmlDocument(lastChange)).findOne('/Event/InstanceID/TransportState/@val')
+//             if (play) {
+//               var vDevP = self.controller.devices.get('Sonos_Device_Play_' + host + '_' + self.id)
+//               if (vDevP) {
+//                 vDevP.set('metrics:level', play === 'PLAYING' ? 'on' : 'off')
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   sockNotifier.listen()
+//   console.log('Binding Sonos notifier')
+//
+//   this.sockNotifier = sockNotifier
+// }
 
 Sonos.prototype.action = function (host, action) {
   http.request({
